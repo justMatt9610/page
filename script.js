@@ -19,7 +19,7 @@ function time() {
 }
 
 function updateText(id, newText) {
-    document.getElementById(id).textContent = newText;
+    document.getElementById(id).innerHTML = newText;
 }
 
 function testButton() {
