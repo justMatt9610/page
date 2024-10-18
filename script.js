@@ -23,6 +23,6 @@ function updateText(id, newText) {
 }
 
 function testButton() {
-    updateText("testButton", time());
+    updateText("testButton", "--> " + time());
 }
 
