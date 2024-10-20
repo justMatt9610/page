@@ -1,3 +1,6 @@
+var bignum = 0;
+var clicks = 0;
+
 function time() {
     const now = new Date(); // Get the current date and time
 
@@ -11,10 +14,20 @@ function time() {
     hours = hours ? hours : 12; // If hours = 0, set it to 12 (midnight or noon)
 
     // Add leading zeros to minutes and seconds if needed
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
+	let info = [hours, minutes, seconds, ampm];
+	return info;
+}
 
-    const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+function timeString(info) {
+	var hours = info[0];
+	var minutes = info[1];
+	var seconds = info[2];
+	var ampm = info[3];
+	
+	minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+	
+	const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
     return formattedTime;
 }
 
@@ -23,6 +36,83 @@ function updateText(id, newText) {
 }
 
 function testButton() {
-    updateText("testButton", "--> " + time());
+	var info = time();
+	const hours = info[0];
+	const minutes = info[1];
+	const seconds = info[2];
+	
+	var timeStr = timeString(info);
+    updateText("testButton", timeStr);
+	
+	const hourFactors = primeFactors(hours);
+	const minuteFactors = primeFactors(minutes);
+	const secondFactors = primeFactors(seconds);
+	/*
+	console.log(hourFactors);
+	console.log(minuteFactors);
+	console.log(secondFactors);
+	*/
+	const hourFactorsString = arrToString(hourFactors, separator = ", ");
+	const minuteFactorsString = arrToString(minuteFactors, separator = ", ");
+	const secondFactorsString = arrToString(secondFactors, separator = ", ");
+	
+	console.log(hourFactorsString);
+	console.log(minuteFactorsString);
+	console.log(secondFactorsString);
+	
+	updateText(id = "hourFactors", "Hour factors: " + hourFactorsString);
+	updateText(id = "minuteFactors", "Minute factors: " + minuteFactorsString);
+	updateText(id = "secondFactors", "Second factors: " + secondFactorsString);
+	
+	const totalAddition = sum(hourFactors) + sum(minuteFactors) + sum(secondFactors);
+	
+	updateText("totalAddition", "Total added: " + totalAddition.toString());
+	
+	bignum += totalAddition;
+	clicks += 1;
+	ratio = Math.round((bignum / clicks) * 100) / 100;
+	
+	updateText("bignum", "your Big Number: " + bignum.toString());
+	updateText("clicks", "your clicks: " + clicks.toString());
+	updateText("ratio", "your Ratio: " + ratio.toString());
 }
 
+
+
+
+
+function primeFactors(num) {
+	if (num == 0) {
+		return [0];
+	}
+	
+    const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+	let factors = [1];
+    for (i = 0; i < primes.length; i++) {
+		if (num / primes[i] % 1 == 0) {
+			factors.push(primes[i]);
+		}
+	}
+	
+	factors.push(num);
+	return factors;
+}
+
+function arrToString(arr, separator="") {
+	var string = "";
+	for (i = 0; i < arr.length; i++) {
+		string += arr[i] + separator;
+	}
+
+	string = string.slice(0, -1 * (separator.length));
+
+	return string;
+}
+
+function sum(arr) {
+	var total = 0;
+	for (i = 0; i < arr.length; i++) {
+		total += arr[i];
+	}
+	return total;
+}
