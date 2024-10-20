@@ -1,6 +1,6 @@
 var bignum = 0;
 var clicks = 0;
-
+//
 function time() {
     const now = new Date(); // Get the current date and time
 
