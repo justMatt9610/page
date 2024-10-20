@@ -1,6 +1,6 @@
 var bignum = 0;
 var clicks = 0;
-//
+
 function time() {
     const now = new Date(); // Get the current date and time
 
@@ -44,9 +44,9 @@ function testButton() {
 	var timeStr = timeString(info);
     updateText("testButton", timeStr);
 	
-	const hourFactors = primeFactors(hours);
-	const minuteFactors = primeFactors(minutes);
-	const secondFactors = primeFactors(seconds);
+	const hourFactors = factors(hours);
+	const minuteFactors = factors(minutes);
+	const secondFactors = factors(seconds);
 	/*
 	console.log(hourFactors);
 	console.log(minuteFactors);
@@ -81,16 +81,15 @@ function testButton() {
 
 
 
-function primeFactors(num) {
+function factors(num) {
 	if (num == 0) {
 		return [0];
 	}
 	
-    const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
-	let factors = [1];
-    for (i = 0; i < primes.length; i++) {
-		if (num / primes[i] % 1 == 0) {
-			factors.push(primes[i]);
+	let factors = [];
+    for (i = 0; i < num; i++) {
+		if (num / i % 1 == 0) {
+			factors.push(i);
 		}
 	}
 	
